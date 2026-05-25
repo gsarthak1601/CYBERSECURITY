@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SentinelForce - Cyber Security Interactive Laboratory. Learn about brute-force attacks, dictionary attacks, and security defense mechanisms through visual simulations.">
+    <title>SentinelForce // Cyber Security Interactive Simulation Lab</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Sidebar Navigation -->
+    <aside class="sidebar">
+        <div class="logo-container">
+            <div class="logo-icon">SF</div>
+            <span class="logo-text">SentinelForce</span>
+            <button class="menu-toggle" id="menuToggle" aria-label="Toggle Menu">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M3 12h18M3 6h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </button>
+        </div>
+        <nav class="nav-links" id="navLinks">
+            <li class="nav-item active" data-tab="dashboard">
+                <button>
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+                    Dashboard
+                </button>
+            </li>
+            <li class="nav-item" data-tab="bruteforce">
+                <button>
+                    <svg viewBox="0 0 24 24"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                    Brute-Force Lab
+                </button>
+            </li>
+            <li class="nav-item" data-tab="dictionary">
+                <button>
+                    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5A2.5 2.5 0 0 1 6.5 2.5H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg>
+                    Dictionary Attack
+                </button>
+            </li>
+            <li class="nav-item" data-tab="defense">
+                <button>
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Defense Laboratory
+                </button>
+            </li>
+        </nav>
+        <div class="sidebar-footer">
+            <p>Cyber Security Project</p>
+            <p>Developed with <span>&hearts;</span> for CS Final</p>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+        <!-- Header -->
+        <header>
+            <div class="header-title">
+                <h1 id="currentTabTitle">Security Dashboard</h1>
+                <p id="currentTabDesc">Real-time threat modeling and password complexity analysis.</p>
+            </div>
+            <div class="status-badge">
+                <span class="status-dot"></span>
+                <span>System: Active</span>
+            </div>
+        </header>
+
+        <!-- DASHBOARD TAB -->
+        <section id="dashboard" class="tab-panel active">
+            <div class="card primary">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Welcome to SentinelForce Interactive Lab
+                </div>
+                <div class="card-content">
+                    <p>This web application is an educational cyber security simulator. It is designed to demonstrate how attackers crack user credentials using automated scripts, and how basic security protocols block these vectors. Select a module from the sidebar or type a test password below to inspect its theoretical vulnerability.</p>
+                </div>
+            </div>
+
+            <!-- Fast Password Tester Widget -->
+            <div class="lab-container">
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm1 14h-2v-2h2zm0-4h-2V7h2z"/></svg>
+                        Immediate Password Strength Analyzer
+                    </div>
+                    <div class="card-content">
+                        <div class="form-group">
+                            <label for="quickPassword">Input a Test Password</label>
+                            <div class="input-container">
+                                <input type="password" id="quickPassword" class="form-input password-input" placeholder="Type a password...">
+                                <button type="button" class="toggle-password" data-target="quickPassword">
+                                    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="strength-bar-wrapper">
+                            <div class="strength-bar-label">
+                                <span>Complexity Class:</span>
+                                <span class="strength-level-text" id="quickStrengthText">Empty</span>
+                            </div>
+                            <div class="strength-bar" id="quickStrengthBar">
+                                <div class="strength-segment"></div>
+                                <div class="strength-segment"></div>
+                                <div class="strength-segment"></div>
+                                <div class="strength-segment"></div>
+                            </div>
+                        </div>
+
+                        <ul class="feedback-list" id="quickFeedback">
+                            <!-- Populated by JS -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                        Crack Time Estimates (Hardware Comparison)
+                    </div>
+                    <div class="card-content">
+                        <p class="card-desc" style="margin-bottom: 15px;">Estimated time for hackers to search the password space using different devices:</p>
+                        
+                        <div class="comparison-grid" id="quickCrackGrid">
+                            <div class="comparison-row" id="row-cpu">
+                                <span class="hardware-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 9h6v6H9zM9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 15h3M1 9h3M1 15h3"/></svg>
+                                    Standard CPU
+                                </span>
+                                <div class="hardware-bar-wrapper">
+                                    <div class="hardware-bar" style="width: 0%;"></div>
+                                </div>
+                                <span class="hardware-time">0 ms</span>
+                            </div>
+                            <div class="comparison-row" id="row-gpu">
+                                <span class="hardware-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 19v2M18 19v2M12 5V3M2 10h20"/></svg>
+                                    Nvidia RTX 4090
+                                </span>
+                                <div class="hardware-bar-wrapper">
+                                    <div class="hardware-bar" style="width: 0%;"></div>
+                                </div>
+                                <span class="hardware-time">0 ms</span>
+                            </div>
+                            <div class="comparison-row" id="row-botnet">
+                                <span class="hardware-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                                    Botnet (1k GPUs)
+                                </span>
+                                <div class="hardware-bar-wrapper">
+                                    <div class="hardware-bar" style="width: 0%;"></div>
+                                </div>
+                                <span class="hardware-time">0 ms</span>
+                            </div>
+                            <div class="comparison-row" id="row-super">
+                                <span class="hardware-label">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M21 9H3M21 15H3M12 3v18"/></svg>
+                                    Supercomputer
+                                </span>
+                                <div class="hardware-bar-wrapper">
+                                    <div class="hardware-bar" style="width: 0%;"></div>
+                                </div>
+                                <span class="hardware-time">0 ms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Awareness Core concepts -->
+            <div class="dashboard-grid">
+                <div class="card">
+                    <div class="card-title">Brute-Force Attacks</div>
+                    <div class="card-content">
+                        <p>Brute-force attacks utilize trial-and-error to guess passwords systematically. An automated script iterates through all possible character combinations (e.g. <code>a</code>, <code>b</code>, ..., <code>z</code>, then <code>aa</code>, <code>ab</code>, ...) until a match is found. Short or simple passwords can be cracked in milliseconds.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Dictionary Attacks</div>
+                    <div class="card-content">
+                        <p>Instead of guessing random character combinations, a dictionary attack runs through lists of known popular passwords, leaks, and vocabulary words. Since many users pick common passwords, these dictionary lists compromise millions of accounts instantly.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Symmetric Encryption</div>
+                    <div class="card-content">
+                        <p>Symmetric encryption secures sensitive data using a single secret key (or password) to lock and unlock files. If a user utilizes a weak password for encryption, an attacker can simply run a brute-force or dictionary script against the ciphertext to extract the decrypted file.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BRUTE-FORCE SIMULATOR TAB -->
+        <section id="bruteforce" class="tab-panel">
+            <div class="lab-container">
+                <!-- Left Panel: Simulator settings -->
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+                        Simulation Control Center
+                    </div>
+                    <div class="card-content">
+                        <div class="form-group">
+                            <label for="bfPassword">Target Password to Crack</label>
+                            <div class="input-container">
+                                <input type="text" id="bfPassword" class="form-input password-input" value="cyber" placeholder="Target word...">
+                            </div>
+                            <span class="checkbox-desc" style="display:block; margin-top:6px;">Caution: Try passwords under 6 characters first for real-time cracking. Longer passwords demonstrate combinatorial explosion.</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Character Sets (Search Complexity)</label>
+                            <div class="checkbox-grid">
+                                <label class="checkbox-card selected" id="lbl-lower">
+                                    <input type="checkbox" id="charset-lower" checked>
+                                    <div class="checkbox-label">
+                                        <span class="checkbox-title">Lowercase</span>
+                                        <span class="checkbox-desc">a-z (26 chars)</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card" id="lbl-upper">
+                                    <input type="checkbox" id="charset-upper">
+                                    <div class="checkbox-label">
+                                        <span class="checkbox-title">Uppercase</span>
+                                        <span class="checkbox-desc">A-Z (26 chars)</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card" id="lbl-numeric">
+                                    <input type="checkbox" id="charset-numeric">
+                                    <div class="checkbox-label">
+                                        <span class="checkbox-title">Numeric</span>
+                                        <span class="checkbox-desc">0-9 (10 chars)</span>
+                                    </div>
+                                </label>
+                                <label class="checkbox-card" id="lbl-symbols">
+                                    <input type="checkbox" id="charset-symbols">
+                                    <div class="checkbox-label">
+                                        <span class="checkbox-title">Special</span>
+                                        <span class="checkbox-desc">!@#$%^&* (32 chars)</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="slider-group">
+                                <div class="slider-header">
+                                    <span>Throttle Guessing Speed</span>
+                                    <span class="slider-value" id="speedText">Instant (Max Power)</span>
+                                </div>
+                                <input type="range" id="bfSpeed" class="range-slider" min="0" max="100" value="0">
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <button id="btnBfStart" class="btn btn-primary">
+                                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M5 3l14 9-14 9V3z" fill="currentColor"/></svg>
+                                Start Attack
+                            </button>
+                            <button id="btnBfPause" class="btn btn-secondary" disabled>
+                                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" fill="currentColor"/></svg>
+                                Pause
+                            </button>
+                            <button id="btnBfReset" class="btn btn-danger" disabled>
+                                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="currentColor"/></svg>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: Visual display and maths -->
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Terminal & Complexity Analysis
+                    </div>
+                    <div class="card-content">
+                        <!-- Metrics row -->
+                        <div class="metrics-row">
+                            <div class="metric-card">
+                                <div class="metric-label">Combinations</div>
+                                <div class="metric-value" id="metric-attempts">0</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Elapsed Time</div>
+                                <div class="metric-value" id="metric-time">0.00s</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Hash Rate (g/s)</div>
+                                <div class="metric-value highlight" id="metric-speed">0</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Search Space</div>
+                                <div class="metric-value" id="metric-space">0</div>
+                            </div>
+                        </div>
+
+                        <!-- Live running console -->
+                        <div class="console-wrapper">
+                            <div class="console-header">
+                                <div class="console-title">Sentinel Bruteforce Console</div>
+                                <div class="console-controls">
+                                    <span class="console-dot red"></span>
+                                    <span class="console-dot yellow"></span>
+                                    <span class="console-dot green"></span>
+                                </div>
+                            </div>
+                            <div class="console-body" id="bfConsole">
+                                <div class="console-log-entry info">System ready. Set parameters and start simulation.</div>
+                                <div class="console-input-line">
+                                    <span class="console-prompt">guest@sentinel:~$</span>
+                                    <span id="console-current-input"></span>
+                                    <span class="console-cursor"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Math card -->
+                        <div class="math-card">
+                            <div class="card-title" style="margin-bottom:8px; font-size:0.95rem; color:var(--neon-purple);">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--neon-purple);"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M4 19.5A2.5 2.5 0 0 0 6.5 22H20M4 19.5V5A2.5 2.5 0 0 1 6.5 2.5H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"/></svg>
+                                The Math of Search Spaces
+                            </div>
+                            <p class="math-explanation">Brute force attacks scale exponentially with length. The total search space size $S$ is calculated by raising the number of characters in the alphabet $C$ to the power of the password length $L$:</p>
+                            <div class="math-formula" id="mathFormulaText">S = C^L</div>
+                            <p class="math-explanation" id="mathCalculations">For 5 characters of Lowercase alphabet (26): $26^5 = 11,881,376$ possible combinations.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DICTIONARY ATTACK TAB -->
+        <section id="dictionary" class="tab-panel">
+            <div class="lab-container">
+                <!-- Left panel: config and execute -->
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        Leak Lookup Configuration
+                    </div>
+                    <div class="card-content">
+                        <p style="margin-bottom: 20px;">Common vocabulary words, basic prefixes/suffixes, and lists of compromised credentials from real leaks are compared immediately by hackers. Test if a password exists in the top database leaks list.</p>
+                        
+                        <div class="form-group">
+                            <label for="dictPassword">Password to Test</label>
+                            <div class="input-container">
+                                <input type="text" id="dictPassword" class="form-input password-input" value="password123" placeholder="Enter word to check...">
+                            </div>
+                        </div>
+
+                        <div class="btn-group">
+                            <button id="btnDictStart" class="btn btn-primary">
+                                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" stroke="currentColor" stroke-width="3" fill="none"/></svg>
+                                Check Leaked Database
+                            </button>
+                            <button id="btnDictReset" class="btn btn-secondary">
+                                Reset
+                            </button>
+                        </div>
+
+                        <div style="margin-top: 30px;">
+                            <div class="metric-card" style="margin-bottom: 12px;">
+                                <div class="metric-label">Status of Password</div>
+                                <div class="metric-value danger" id="dict-status">NOT SEARCHED</div>
+                            </div>
+                            <div class="metrics-row">
+                                <div class="metric-card">
+                                    <div class="metric-label">Database Size</div>
+                                    <div class="metric-value">150 Entries</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Lookup Speed</div>
+                                    <div class="metric-value highlight" id="dict-time">-- ms</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right panel: terminal check log -->
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M5 20h.01M19 4h2v12h-2zM3 4h12v12H3z"/></svg>
+                        Database Match Search Log
+                    </div>
+                    <div class="card-content">
+                        <div class="console-wrapper" style="height: 430px;">
+                            <div class="console-header">
+                                <div class="console-title">Database Query Engine</div>
+                                <div class="console-controls">
+                                    <span class="console-dot red"></span>
+                                    <span class="console-dot yellow"></span>
+                                    <span class="console-dot green"></span>
+                                </div>
+                            </div>
+                            <div class="console-body" id="dictConsole">
+                                <div class="console-log-entry info">Idle. Waiting for a password match command...</div>
+                                <div class="console-input-line">
+                                    <span class="console-prompt">db_searcher:~$</span>
+                                    <span id="dict-current-input"></span>
+                                    <span class="console-cursor"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- DEFENSE LABORATORY TAB -->
+        <section id="defense" class="tab-panel">
+            <div class="card primary">
+                <div class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Understanding Countermeasures
+                </div>
+                <div class="card-content">
+                    <p>Why do complex attacks fail on real production servers? Because servers employ **defensive policies**. Toggle various authentication policies below to observe how they affect a brute-force hacker script attempting to compromise an account.</p>
+                </div>
+            </div>
+
+            <div class="lab-container">
+                <!-- Left panel: defense policies toggler -->
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+                        Active Defense Policies
+                    </div>
+                    <div class="card-content">
+                        <div class="defense-toggles-grid">
+                            <!-- Toggle 1: Rate Limiting -->
+                            <div class="defense-toggle-card" id="card-def-rate">
+                                <div class="defense-toggle-header">
+                                    <span class="defense-toggle-title">Rate Limiting</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="def-rate">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <p class="defense-toggle-desc">Restricts requests to 5 attempts, enforcing a 3-second delay on subsequent attempts.</p>
+                                <span class="defense-toggle-impact">Impact: -99% Attack Speed</span>
+                            </div>
+
+                            <!-- Toggle 2: Captchas -->
+                            <div class="defense-toggle-card" id="card-def-captcha">
+                                <div class="defense-toggle-header">
+                                    <span class="defense-toggle-title">CAPTCHA Check</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="def-captcha">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <p class="defense-toggle-desc">Requires proof of humanity, inserting a forced 1.5-second processing delay per attempt.</p>
+                                <span class="defense-toggle-impact">Impact: Adds heavy lag</span>
+                            </div>
+
+                            <!-- Toggle 3: Account Lockout -->
+                            <div class="defense-toggle-card" id="card-def-lockout">
+                                <div class="defense-toggle-header">
+                                    <span class="defense-toggle-title">Account Lockout</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="def-lockout">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <p class="defense-toggle-desc">Completely freezes the user account for 1 hour after 3 consecutive failed entries.</p>
+                                <span class="defense-toggle-impact">Impact: Shuts down attack</span>
+                            </div>
+
+                            <!-- Toggle 4: MFA -->
+                            <div class="defense-toggle-card" id="card-def-mfa">
+                                <div class="defense-toggle-header">
+                                    <span class="defense-toggle-title">MFA (Multi-Factor)</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="def-mfa">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                                <p class="defense-toggle-desc">Enforces a secondary token verification (such as SMS or app code).</p>
+                                <span class="defense-toggle-impact">Impact: Attack Impossible</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group" style="margin-top:20px;">
+                            <label for="defPassword">Target Login Password</label>
+                            <input type="text" id="defPassword" class="form-input password-input" value="safe" style="letter-spacing:1px;">
+                        </div>
+
+                        <div class="btn-group">
+                            <button id="btnDefStart" class="btn btn-primary">
+                                <svg viewBox="0 0 24 24" width="16" height="16"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" fill="currentColor"/></svg>
+                                Launch Sandbox Attack
+                            </button>
+                            <button id="btnDefReset" class="btn btn-secondary">Reset Sandbox</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right panel: terminal outputs -->
+                <div class="card">
+                    <div class="card-title">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                        Defensive Sandbox Console
+                    </div>
+                    <div class="card-content">
+                        <!-- Shield active status block -->
+                        <div class="metrics-row">
+                            <div class="metric-card" style="grid-column: span 2;">
+                                <div class="metric-label">Active Mitigations</div>
+                                <div class="metric-value highlight" id="def-active-count" style="font-size:1.1rem; color:var(--neon-blue);">0 Shields Engaged</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Attempts Allowed</div>
+                                <div class="metric-value" id="def-attempts-left">Unlimited</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="metric-label">Hacker Success</div>
+                                <div class="metric-value danger" id="def-outcome" style="font-size:1.1rem; color:var(--neon-orange);">Idle</div>
+                            </div>
+                        </div>
+
+                        <!-- Console log -->
+                        <div class="console-wrapper" style="height:355px;">
+                            <div class="console-header">
+                                <div class="console-title">Auth Shield Console</div>
+                                <div class="console-controls">
+                                    <span class="console-dot red"></span>
+                                    <span class="console-dot yellow"></span>
+                                    <span class="console-dot green"></span>
+                                </div>
+                            </div>
+                            <div class="console-body" id="defConsole">
+                                <div class="console-log-entry info">Defense sandbox ready. Toggle policies on the left, then click Launch Sandbox Attack to see how policies block cracking.</div>
+                                <div class="console-input-line">
+                                    <span class="console-prompt">sandbox_auth:~$</span>
+                                    <span id="def-current-input"></span>
+                                    <span class="console-cursor"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- Import logic code files -->
+    <script src="common-passwords.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
